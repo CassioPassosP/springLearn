@@ -4,6 +4,7 @@ import io.github.cs.productGo.model.Produto;
 import io.github.cs.productGo.repository.ProdutoRepository;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 //Recebe Requisicoes REST
@@ -40,4 +41,18 @@ public class ProdutoController {
         produtoRepository.deleteById(id);
         System.out.println("Produto Deletado");
     }
+
+    @PutMapping("{id}")
+    public void atualizar(@PathVariable("id") String id,
+                          @RequestBody Produto produto){
+        produto.setId(id);
+        produtoRepository.save(produto);
+        System.out.println("Produto Atualizado");
+    }
+
+    @GetMapping
+    public List<Produto> buscar(@RequestParam("name") String name){
+        return produtoRepository.findByName(name);
+    }
+    //exemplo:     public List<Produto> buscar(@RequestParam("name") String name, @RequestParam("preco") double preco){
 }
